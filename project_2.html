@@ -46,15 +46,10 @@
         
             #version 300 es
             in vec4 aPosition;
-            in vec4 aColor;
-            out vec4 vColor;
             void main()
             {
-                gl_PointSize = 1.0;
-                gl_Position.x = aPosition.x;
-                gl_Position.y = aPosition.y - yShift;
-                gl_Position.z = 0.0;
-                gl_Position.w = 1.0;
+                gl_PointSize = 4.0;
+                gl_PointSize = aPosition;
                 vColor = aColor;
             }
         </script>
@@ -62,12 +57,10 @@
 
             #version 300 es
             precision mediump float;
-            in vec4 vColor;
             out vec4 fColor; // color to output
-
             void main()
             {
-                fColor = vColor;
+                fColor = vec4(1.1, 1.1, 0.0, 1.0);
             }
         </script>
     <script type="text/javascript" src="./Common/initShaders.js"></script>
