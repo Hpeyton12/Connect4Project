@@ -16,7 +16,7 @@ window.onload = function init() {
     gl = canvas.getContext("webgl2"); // get context for drawings
     if (!gl) { alert("WebGL 2.0 isn't available"); }
     
-    colorpick = 2;
+    colorpick = 0;
     c.push(colors[colorpick]);
 
     // configure webgl - intialize our drawing
@@ -29,7 +29,7 @@ window.onload = function init() {
     // load data into GPU
     var bufferId = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, bufferId); // What comes next should affect bufferId
-    gl.bufferData(gl.ARRAY_BUFFER, flatten(vgrid), gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, vgrid, gl.STATIC_DRAW);
 
     // tie aPosition to the data in the buffer
     var aPosition = gl.getAttribLocation(program, "aPosition"); // connect to variable in shader
@@ -47,6 +47,6 @@ window.onload = function init() {
     gl.enableVertexAttribArray(aColor);
 
     gl.clear(gl.COLOR_BUFFER_BIT); // completely clear color
-    gl.drawArrays(gl.LINES, 0, 4); // renders a triangle with 3 points
+    gl.drawArrays(gl.LINES, 0, 8); // renders a triangle with 3 points
 
 }

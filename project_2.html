@@ -43,24 +43,23 @@
 
 <head>
     <script id="vertex-shader" type="x-shader/x-vertex">
+        
             #version 300 es
             in vec4 aPosition;
             in vec4 aColor;
-            uniform float xShift;
-            uniform float yShift;
-            uniform float uOrientation;
             out vec4 vColor;
             void main()
             {
                 gl_PointSize = 1.0;
-                gl_Position.x = aPosition.x + xShift;
-                gl_Position.y = aPosition.y + yShift;
+                gl_Position.x = aPosition.x;
+                gl_Position.y = aPosition.y - yShift;
                 gl_Position.z = 0.0;
                 gl_Position.w = 1.0;
-                vColor = aColor; // vec4((1.0+aPosition)/2.0);
+                vColor = aColor;
             }
         </script>
     <script id="fragment-shader" type="x-shader/x-fragment">
+
             #version 300 es
             precision mediump float;
             in vec4 vColor;
