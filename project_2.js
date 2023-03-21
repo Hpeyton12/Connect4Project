@@ -17,7 +17,7 @@ var c = []; //color being used for each point.
 var possible_wins = [
 /*rows*/[1,2,3,4],[2,3,4,5],[6,7,8,9],[7,8,9,10],[11,12,13,14],[12,13,14,15],[16,17,18,19],[17,18,19,20],[21,22,23,24],[22,23,24,25],
 /*columns*/[1,6,11,16],[6,11,16,21],[2,7,12,17],[7,12,17,22],[3,8,13,18],[8,13,18,23],[4,9,14,19],[9,14,19,24],[5,10,15,20],[10,15,20,25],
-/*diagonals*/[16,12,8,4],[21,17,13,9],[17,13,9,5],[22,18,14,10],[6,12,18,24],[1,7,13,19],[7,13,19,25],[2,8,14,20]];
+/*diagonals*/[4,8,12,16],[9,13,17,21],[5,9,13,17],[10,14,18,22],[6,12,18,24],[1,7,13,19],[7,13,19,25],[2,8,14,20]];
 
 var player1_hand = []; //keep track of the elements in each hand to compare them to possible_wins.
 var player2_hand = [];
@@ -31,10 +31,22 @@ var player1Turn = true; //variable used to alternate between player turns
 var visibleRules = false; //TO-DO: create a 'rules' button that switches screens to show rules then disappears.
 
 function checkWin(hand){    //takes parameter hand, checks whether most recent player has a winning combination, then returns true or false.
-    var hasWin = hand.every(elem => possible_wins.includes(elem));
-    if (hasWin = true){
-        console.log("WINNER");
-        return true;
+    player1_hand = player1_hand.sort((a,b) => a - b); //sort player_hand in ascending order
+    player2_hand = player2_hand.sort((a,b) => a - b); //sort player2_hand in ascending order
+    var includes = false;
+    if (player1Turn = true){
+        includes = possible_wins.every(a => player1_hand.every((v, i) => v === a[i]));
+        if (includes = true) {
+            console.log('element present. Player1 win!')
+            return true;
+        }
+    }
+    else if (player1Turn = false){
+        includes = possible_wins.some(a => player2_hand.every((v,i) => v === a[i]));
+        if (includes = true) {
+            console.log('element present. Player2 win!')
+            return true;
+        }
     }
     else {
         console.log(false);
@@ -43,19 +55,23 @@ function checkWin(hand){    //takes parameter hand, checks whether most recent p
 }
 
 function playerHand(loc){   //takes parameter loc, which is the number location on the chart and adds this to player1_hand or 2, based on turn.
-    console.log("Player 1 hand:", player1_hand); //for testing purposes... checks what is in player 1 hand after each click
-    console.log("Player 2 hand:", player2_hand); //for testing purposes... checks what is in player 2 hand after each click
-    if (player1Turn = true){ //player 1 turn
+    if (player1Turn == true){ //player 1 turn
         player1_hand.push(loc); //I can see this being an issue, because this is [] and possible_wins is [[]].
+        console.log("Player 1 hand:", player1_hand); //for testing purposes... checks what is in player 1 hand after each click
+        console.log("Player 2 hand:", player2_hand); //for testing purposes... checks what is in player 2 hand after each click
         if (checkWin(player1_hand) == true){ //checks to see if hand has winning row combination 
             console.log("WINNERINPLAYERHAND FUNCTION1"); //checks to see if this function is operating properly.
         }
+        player1Turn = false;
     }
-    else if (player1Turn = false){ //player 2 turn
+    else if (player1Turn == false){ //player 2 turn
         player2_hand.push(loc); //I can see this being an issue, because this is [] and possible_wins is [[]].
+        console.log("Player 1 hand:", player1_hand); //for testing purposes... checks what is in player 1 hand after each click
+        console.log("Player 2 hand:", player2_hand); //for testing purposes... checks what is in player 2 hand after each click
         if (checkWin(player2_hand) == true){
             console.log("WINNERINPLAYERHAND FUNCTION2"); //checks to see if this is working properly
         } 
+        player1Turn = true;
     }
 
 }
