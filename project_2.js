@@ -28,32 +28,34 @@ var r5 = []; //row5
 var player1Turn = true; //variable used to alternate between player turns
 var visibleRules = false; //TO-DO: create a 'rules' button that switches screens to show rules then disappears.
 
-function checkWin(hand){
+function checkWin(hand){    //takes parameter hand, checks whether most recent player has a winning combination, then returns true or false.
     const hasWin = hand.every(elem => possible_wins.includes(elem));
     if (hasWin = true){
-        
+        return true;
     }
-
+    else {
+        return false;
+    }
 }
 
-function playerHand(loc){
+function playerHand(loc){   //takes parameter loc, which is the number location on the chart and adds this to player1_hand or 2, based on turn.
     if (player1Turn = true){
-        player1_hand.push(loc);
-        checkWin(player1_hand);
+        player1_hand.push(loc); //I can see this being an issue, because this is [] and possible_wins is [[]].
+        checkWin(player1_hand); //checks to see if hand has winning row combination
     }
     else if (player1Turn = false){
-        player2_hand.push(loc);
-        checkWin(player2_hand);
+        player2_hand.push(loc); //I can see this being an issue, because this is [] and possible_wins is [[]].
+        checkWin(player2_hand); //checks to see if hand has winning row combination
     }
 
 }
 
-function Drop(event){
+function Drop(event){ //Determines which button was pressed, specifically which row, and animates the dropping of the puck. 
     if (event == 1){
         console.log("This is event 1.");
         if (r1.length == 0){
             r1.push(21);
-            playerHand(21);
+            playerHand(21); //adds 21 to list of occupied spaces for player1 or 2, dependent on if/else if in this function. 
         }
         else if (r1.length == 1){
             r1.push(16);
@@ -73,7 +75,7 @@ function Drop(event){
         }
 
     }
-    else if (event == 2){
+    else if (event == 2){ //Still working on adding logic for these, but it will be like above.
         console.log("This is event 2.");
     }
     else if (event == 3){
@@ -87,7 +89,7 @@ function Drop(event){
     }
 }
 
-function drawgrid(){
+function drawgrid(){ //draws a 5x5 grid on page loadup
     colorpick = 0;
     var temp = 0;
     while (temp < 5000){
@@ -125,7 +127,7 @@ function drawgrid(){
     gl.enableVertexAttribArray(aColor);
 
     vgridrender();
-    positions = [];
+    positions = []; //clear positions and c to be used by other functions.
     c = []
 }
 
@@ -133,7 +135,7 @@ window.onload = function init() {
     canvas = document.getElementById("gl-canvas"); // get link to canvas
     gl = canvas.getContext("webgl2"); // get context for drawings
 
-    var Drop1 = document.getElementById("one");
+    var Drop1 = document.getElementById("one"); //event Listeners for each of the buttons to get their value (1-5) as an event.
     Drop1.addEventListener("click", function(){Drop(Drop1.value)});
 
     var Drop2 = document.getElementById("two");
@@ -152,7 +154,7 @@ window.onload = function init() {
     drawgrid();
 }
 
-function vgridrender(){
+function vgridrender(){ //render function ONLY for the grid. We will use a separate one for the pucks since it can not utilize gl.LINES.
     gl.clear(gl.COLOR_BUFFER_BIT); // completely clear color
     gl.drawArrays(gl.LINES, 0, 16); // draw lines
 }
