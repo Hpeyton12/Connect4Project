@@ -1,17 +1,18 @@
 var gl; // link to what we are drawing on
 var canvas;
-var numPositions = 5000;
+var numPositions = 5000; //number of positions for the color. 
 var positions = []; // array of points
-var Ydirection = 1;
-var colorpick = 0;
+var Ydirection = 0; //default y direction is 0, so that when the puck is dropped this will change to -1. 
+var colorpick = 0; //colorchoice for each puck. [1] for player1 and [2] for player2.
 var goingY = false;
-var yShift = 0.0;
+var yShift = 0.0; //we will use yShift, as on gasketAnimate modified hw assignment, except the pucks will only go down and stop.
 var colors = [
     vec4(0.0, 0.0, 0.0, 1.0), // black
     vec4(1.0, 0.0, 0.0, 1.0), // red
     vec4(0.0, 0.0, 1.0, 1.0), // blue
 ];
-var c = [];
+var c = []; //color being used for each point. 
+
 //possible wins does not need a particular order. Do if(playerdeck.contains(possible_wins)) to check, iterate through each array in possible wins. 
 var possible_wins = [
 /*rows*/[1,2,3,4],[2,3,4,5],[6,7,8,9],[7,8,9,10],[11,12,13,14],[12,13,14,15],[16,17,18,19],[17,18,19,20],[21,22,23,24],[22,23,24,25],
@@ -20,6 +21,7 @@ var possible_wins = [
 
 var player1_hand = []; //keep track of the elements in each hand to compare them to possible_wins.
 var player2_hand = [];
+
 var r1 = []; //row1
 var r2 = []; //row2
 var r3 = []; //row3
@@ -29,23 +31,31 @@ var player1Turn = true; //variable used to alternate between player turns
 var visibleRules = false; //TO-DO: create a 'rules' button that switches screens to show rules then disappears.
 
 function checkWin(hand){    //takes parameter hand, checks whether most recent player has a winning combination, then returns true or false.
-    const hasWin = hand.every(elem => possible_wins.includes(elem));
+    var hasWin = hand.every(elem => possible_wins.includes(elem));
     if (hasWin = true){
+        console.log("WINNER");
         return true;
     }
     else {
+        console.log(false);
         return false;
     }
 }
 
 function playerHand(loc){   //takes parameter loc, which is the number location on the chart and adds this to player1_hand or 2, based on turn.
-    if (player1Turn = true){
+    console.log("Player 1 hand:", player1_hand); //for testing purposes... checks what is in player 1 hand after each click
+    console.log("Player 2 hand:", player2_hand); //for testing purposes... checks what is in player 2 hand after each click
+    if (player1Turn = true){ //player 1 turn
         player1_hand.push(loc); //I can see this being an issue, because this is [] and possible_wins is [[]].
-        checkWin(player1_hand); //checks to see if hand has winning row combination
+        if (checkWin(player1_hand) == true){ //checks to see if hand has winning row combination 
+            console.log("WINNERINPLAYERHAND FUNCTION1"); //checks to see if this function is operating properly.
+        }
     }
-    else if (player1Turn = false){
+    else if (player1Turn = false){ //player 2 turn
         player2_hand.push(loc); //I can see this being an issue, because this is [] and possible_wins is [[]].
-        checkWin(player2_hand); //checks to see if hand has winning row combination
+        if (checkWin(player2_hand) == true){
+            console.log("WINNERINPLAYERHAND FUNCTION2"); //checks to see if this is working properly
+        } 
     }
 
 }
@@ -73,19 +83,98 @@ function Drop(event){ //Determines which button was pressed, specifically which 
             r1.push(1);
             playerHand(1);
         }
-
     }
-    else if (event == 2){ //Still working on adding logic for these, but it will be like above.
+    else if (event == 2){ 
         console.log("This is event 2.");
+        if (r2.length == 0) {
+            r2.push(22);
+            playerHand(22);
+        }
+        else if (r2.length == 1) {
+            r2.push(17);
+            playerHand(17);
+        }
+        else if (r2.length == 2) {
+            r2.push(12);
+            playerHand(12);
+        }
+        else if (r2.length == 3) {
+            r2.push(7);
+            playerHand(7);
+        }
+        else if (r2.length == 4) {
+            r2.push(2);
+            playerHand(2);
+        }
     }
     else if (event == 3){
         console.log("This is event 3.");
+        if (r3.length == 0) {
+            r3.push(23);
+            playerHand(23);
+        }
+        else if (r3.length == 1) {
+            r3.push(18);
+            playerHand(18);
+        }
+        else if (r3.length == 2) {
+            r3.push(13);
+            playerHand(13);
+        }
+        else if (r3.length == 3) {
+            r3.push(8);
+            playerHand(8);
+        }
+        else if (r3.length == 4) {
+            r3.push(3);
+            playerHand(3);
+        }
     }
     else if (event == 4){
         console.log("This is event 4.");
+        if (r4.length == 0) {
+            r4.push(24);
+            playerHand(24);
+        }
+        else if (r4.length == 1) {
+            r4.push(19);
+            playerHand(19);
+        }
+        else if (r4.length == 2) {
+            r4.push(14);
+            playerHand(14);
+        }
+        else if (r4.length == 3) {
+            r4.push(9);
+            playerHand(9);
+        }
+        else if (r4.length == 4) {
+            r4.push(4);
+            playerHand(4);
+        }
     }
     else if (event == 5){
         console.log("This is event 5.");
+        if (r5.length == 0) {
+            r5.push(25);
+            playerHand(25);
+        }
+        else if (r5.length == 1) {
+            r5.push(20);
+            playerHand(20);
+        }
+        else if (r5.length == 2) {
+            r5.push(15);
+            playerHand(15);
+        }
+        else if (r5.length == 3) {
+            r5.push(10);
+            playerHand(10);
+        }
+        else if (r5.length == 4) {
+            r5.push(5);
+            playerHand(5);
+        }
     }
 }
 
