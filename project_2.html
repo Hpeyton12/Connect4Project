@@ -2,65 +2,27 @@
 
 <head>
     <link href="project_2.css" rel="stylesheet">
-    <button id="Drop1">Drop</button>
-    <button id="Drop2">Drop</button>
-    <button id="Drop3">Drop</button>
-    <button id="Drop4">Drop</button>
+    <button id="move1" value='1'>Drop</button>
+    <button id="move2" value='2'>Drop</button>
+    <button id="move3" value='3'>Drop</button>
+    <button id="move4" value='4'>Drop</button>
+    <button id="move5" value='5'>Drop</button>
     <script id="vertex-shader" type="x-shader/x-vertex">
             #version 300 es
             in vec4 aPosition;
-            in vec4 aColor;
-            uniform float xShift;
-            uniform float yShift;
-            uniform float uOrientation;
-            out vec4 vColor;
             void main()
             {
                 gl_PointSize = 1.0;
-                gl_Position.x = aPosition.x + xShift;
-                gl_Position.y = aPosition.y + yShift;
-                gl_Position.z = 0.0;
-                gl_Position.w = 1.0;
-                vColor = aColor; // vec4((1.0+aPosition)/2.0);
+                gl_Position = aPosition;
             }
         </script>
     <script id="fragment-shader" type="x-shader/x-fragment">
             #version 300 es
             precision mediump float;
-            in vec4 vColor;
-            out vec4 fColor; // color to output
-
-            void main()
-            {
-                fColor = vColor;
-            }
-        </script>
-</head>
-
-<body>
-    <canvas id="gl-canvas" width="512" height="512"></canvas>
-    <html>
-
-<head>
-    <script id="vertex-shader" type="x-shader/x-vertex">
-        
-            #version 300 es
-            in vec4 aPosition;
-            void main()
-            {
-                gl_PointSize = 4.0;
-                gl_PointSize = aPosition;
-                vColor = aColor;
-            }
-        </script>
-    <script id="fragment-shader" type="x-shader/x-fragment">
-
-            #version 300 es
-            precision mediump float;
             out vec4 fColor; // color to output
             void main()
             {
-                fColor = vec4(1.1, 1.1, 0.0, 1.0);
+                fColor = vec4(0.0, 0.0, 0.0, 1.0);
             }
         </script>
     <script type="text/javascript" src="./Common/initShaders.js"></script>
@@ -73,7 +35,6 @@
     <canvas id="gl-canvas" width="512" height="512"></canvas>
 </body>
 
-</html>
 </body>
 
 </html>

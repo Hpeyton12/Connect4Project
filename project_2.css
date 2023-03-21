@@ -1,23 +1,29 @@
-#Drop1{
+#move1{
 position:absolute;
 top: 0;
 left:30px;
 }
 
-#Drop2{
+#move2{
 position:absolute;
 top:0;
 left: 110px;
 }
 
-#Drop3{
+#move3{
 position: absolute;
 top:0;
 left: 190px;
 }
 
-#Drop4{
+#move4{
 position: absolute;
 top:0;
 left: 270px;
+}
+
+#move5{
+position: absolute;
+top:0;
+left: 350px;
 }
