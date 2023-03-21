@@ -20,13 +20,57 @@ var possible_wins = [
 
 var player1_hand = []; //keep track of the elements in each hand to compare them to possible_wins.
 var player2_hand = [];
-
+var r1 = []; //row1
+var r2 = []; //row2
+var r3 = []; //row3
+var r4 = []; //row4
+var r5 = []; //row5
 var player1Turn = true; //variable used to alternate between player turns
 var visibleRules = false; //TO-DO: create a 'rules' button that switches screens to show rules then disappears.
+
+function checkWin(hand){
+    const hasWin = hand.every(elem => possible_wins.includes(elem));
+    if (hasWin = true){
+        
+    }
+
+}
+
+function playerHand(loc){
+    if (player1Turn = true){
+        player1_hand.push(loc);
+        checkWin(player1_hand);
+    }
+    else if (player1Turn = false){
+        player2_hand.push(loc);
+        checkWin(player2_hand);
+    }
+
+}
 
 function Drop(event){
     if (event == 1){
         console.log("This is event 1.");
+        if (r1.length == 0){
+            r1.push(21);
+            playerHand(21);
+        }
+        else if (r1.length == 1){
+            r1.push(16);
+            playerHand(16);
+        }
+        else if (r1.length == 2){
+            r1.push(11);
+            playerHand(11);
+        }
+        else if (r1.length == 3){
+            r1.push(6);
+            playerHand(6);
+        }
+        else if (r1.length == 4){
+            r1.push(1);
+            playerHand(1);
+        }
 
     }
     else if (event == 2){
