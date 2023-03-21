@@ -30,21 +30,20 @@ var r5 = []; //row5
 var player1Turn = true; //variable used to alternate between player turns
 var visibleRules = false; //TO-DO: create a 'rules' button that switches screens to show rules then disappears.
 
-function checkWin(hand){    //takes parameter hand, checks whether most recent player has a winning combination, then returns true or false.
-    player1_hand = player1_hand.sort((a,b) => a - b); //sort player_hand in ascending order
-    player2_hand = player2_hand.sort((a,b) => a - b); //sort player2_hand in ascending order
-    var includes = false;
-    if (player1Turn = true){
-        includes = possible_wins.every(a => player1_hand.every((v, i) => v === a[i]));
-        if (includes = true) {
-            console.log('element present. Player1 win!')
+function checkWin(hand){ //takes parameter hand, checks whether most recent player has a winning combination, then returns true or false.
+    if (player1Turn == true){
+        hand = hand.sort((a, b) => a - b);
+        const includes = possible_wins.some(combination => { return combination.every(number => hand.includes(number));});
+        console.log("p1",includes);
+        if (includes == true) {
             return true;
         }
     }
-    else if (player1Turn = false){
-        includes = possible_wins.some(a => player2_hand.every((v,i) => v === a[i]));
-        if (includes = true) {
-            console.log('element present. Player2 win!')
+    else if (player1Turn == false){
+        hand = hand.sort((a, b) => a - b);
+        const includes = possible_wins.some(combination => { return combination.every(number => hand.includes(number));});
+        console.log("p2",includes);
+        if (includes == true) {
             return true;
         }
     }
@@ -57,23 +56,24 @@ function checkWin(hand){    //takes parameter hand, checks whether most recent p
 function playerHand(loc){   //takes parameter loc, which is the number location on the chart and adds this to player1_hand or 2, based on turn.
     if (player1Turn == true){ //player 1 turn
         player1_hand.push(loc); //I can see this being an issue, because this is [] and possible_wins is [[]].
+        player1_hand = player1_hand.sort((a, b) => a - b);
         console.log("Player 1 hand:", player1_hand); //for testing purposes... checks what is in player 1 hand after each click
         console.log("Player 2 hand:", player2_hand); //for testing purposes... checks what is in player 2 hand after each click
         if (checkWin(player1_hand) == true){ //checks to see if hand has winning row combination 
-            console.log("WINNERINPLAYERHAND FUNCTION1"); //checks to see if this function is operating properly.
+            console.log("WINNER IN PLAYER HAND FUNCTION 1"); //checks to see if this function is operating properly.
         }
         player1Turn = false;
     }
     else if (player1Turn == false){ //player 2 turn
         player2_hand.push(loc); //I can see this being an issue, because this is [] and possible_wins is [[]].
+        player2_hand = player2_hand.sort((a, b) => a - b);
         console.log("Player 1 hand:", player1_hand); //for testing purposes... checks what is in player 1 hand after each click
         console.log("Player 2 hand:", player2_hand); //for testing purposes... checks what is in player 2 hand after each click
         if (checkWin(player2_hand) == true){
-            console.log("WINNERINPLAYERHAND FUNCTION2"); //checks to see if this is working properly
+            console.log("WINNER IN PLAYER HAND FUNCTION 2"); //checks to see if this is working properly
         } 
         player1Turn = true;
     }
-
 }
 
 function Drop(event){ //Determines which button was pressed, specifically which row, and animates the dropping of the puck. 
