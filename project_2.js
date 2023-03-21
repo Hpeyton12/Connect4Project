@@ -30,6 +30,16 @@ var r5 = []; //row5
 var player1Turn = true; //variable used to alternate between player turns
 var visibleRules = false; //TO-DO: create a 'rules' button that switches screens to show rules then disappears.
 
+function DisplayNames(){
+
+    if (player1Turn == true){
+        playerTurnText.value = document.getElementById("p1Name").value + "'s turn";
+    }
+    else if (player1Turn = false){
+        playerTurnText.value = document.getElementById("p2Name").value + "'s turn";
+    }
+}
+
 function checkWin(hand){ //takes parameter hand, checks whether most recent player has a winning combination, then returns true or false.
     if (player1Turn == true){
         hand = hand.sort((a, b) => a - b);
