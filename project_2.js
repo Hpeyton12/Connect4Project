@@ -16,19 +16,19 @@ var player1Turn = true;
 var visibleRules = false;
 
 function Drop(event){
-    if (event = 1){
+    if (event == 1){
         console.log("This is event 1.");
     }
-    else if (event = 2){
+    else if (event == 2){
         console.log("This is event 2.");
     }
-    else if (event = 3){
+    else if (event == 3){
         console.log("This is event 3.");
     }
-    else if (event = 4){
+    else if (event == 4){
         console.log("This is event 4.");
     }
-    else if (event = 5){
+    else if (event == 5){
         console.log("This is event 5.");
     }
 }
@@ -62,19 +62,24 @@ function drawgrid(){
 window.onload = function init() {
     canvas = document.getElementById("gl-canvas"); // get link to canvas
     gl = canvas.getContext("webgl2"); // get context for drawings
+
+    var Drop1 = document.getElementById("one");
+    Drop1.addEventListener("click", function(){Drop(Drop1.value)});
+
+    var Drop2 = document.getElementById("two");
+    Drop2.addEventListener("click", function(){Drop(Drop2.value)});
+
+    var Drop3 = document.getElementById("three");
+    Drop3.addEventListener("click", function(){Drop(document.getElementById("3").value)});
+
+    var Drop4 = document.getElementById("four")
+    Drop4.addEventListener("click", function(){Drop(Drop4.value)});
+
+    var Drop5 = document.getElementById("five");
+    Drop5.addEventListener("click", function(){Drop(Drop5.value)});
+
     if (!gl) { alert("WebGL 2.0 isn't available"); }
     drawgrid();
-
-    var Drop1 = document.getElementById("move1").value;
-    Drop1.addEventListener("click", Drop);
-    var Drop2 = document.getElementById("move2").value;
-    Drop2.addEventListener("click", Drop);
-    var Drop3 = document.getElementById("move3").value;
-    Drop3.addEventListener("click", Drop);
-    var Drop4 = document.getElementById("move4").value;
-    Drop4.addEventListener("click", Drop);
-    var Drop5 = document.getElementById("move5").value;
-    Drop5.addEventListener("click", Drop);
 }
 
 function vgridrender(){

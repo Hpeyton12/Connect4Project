@@ -1,29 +1,29 @@
-#move1{
+#one{
 position:absolute;
 top: 0;
 left:30px;
 }
 
-#move2{
+#two{
 position:absolute;
 top:0;
-left: 110px;
+left: 140px;
 }
 
-#move3{
+#three{
 position: absolute;
 top:0;
-left: 190px;
+left: 240px;
 }
 
-#move4{
+#four{
 position: absolute;
 top:0;
-left: 270px;
+left: 345px;
 }
 
-#move5{
+#five{
 position: absolute;
 top:0;
-left: 350px;
+left: 450px;
 }
