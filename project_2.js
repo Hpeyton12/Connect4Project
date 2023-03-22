@@ -9,7 +9,7 @@ var yShift = 0.0; //we will use yShift, as on gasketAnimate modified hw assignme
 var xCenterOfCircle;
 var yCenterOfCircle;
 var centerOfCircle;
-var radiusOfCircle = 200;
+var radiusOfCircle = .5;
 var ATTRIBUTES = 2;
 var noOfFans = 80;
 var anglePerFan;
@@ -286,6 +286,56 @@ function drawgrid(){ //draws a 5x5 grid on page loadup
     c = []
 }
 
+function drawcircle(){
+
+    //set center of the circle vertex to 3 at (1,1)
+    centerX = 1;
+    centerY = 1;
+
+    radius = dist(centerX, centerY, .5, .5);
+
+    let vertex1X = centerX + radius * cos(angle); //calculate coordinates for each vertex of the rotating triangle
+    let vertex1Y = centerY + radius * sin(angle);
+    let vertex2X = centerX + radius * cos(angle + TWO_PI/3);
+    let vertex2Y = centerY + radius * sin(angle + TWO_PI/3);
+    let vertex3X = centerX + radius * cos(angle + 2*TWO_PI/3);
+    let vertex3Y = centerY + radius * sin(angle + 2*TWO_PI/3);
+  
+    triangle(vertex1X, vertex1Y, vertex2X, vertex2Y, vertex3X, vertex3Y); // draw triangle with vertices based on calculated coordinates
+ 
+    angle += TWO_PI/360; // increment angle to rotate triangle
+  
+    if (angle >= TWO_PI) { // wrap around when angle exceeds full rotation
+    angle = 0;
+  }
+    
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.clearColor(1.0, 1.0, 1.0, 1.0); // clear color then make canvas white to start
+
+    var program = initShaders(gl, "vertex-shader", "fragment-shader"); //compiles shaders
+    gl.useProgram(program);
+
+    // load data into GPU
+    var bufferId = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, bufferId); // What comes next should affect bufferId
+    gl.bufferData(gl.ARRAY_BUFFER, flatten(positions), gl.STATIC_DRAW);
+
+    // tie aPosition to the data in the buffer
+    var aPosition = gl.getAttribLocation(program, "aPosition"); // connect to variable in shader
+    gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0); // describing positions in the array
+    gl.enableVertexAttribArray(aPosition);
+
+    // load data into GPU
+    var bufferColorId = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, bufferColorId); // what comes next should affect bufferId
+    gl.bufferData(gl.ARRAY_BUFFER, flatten(c), gl.STATIC_DRAW);
+
+    // tie color info to the data in the buffer
+    var aColor = gl.getAttribLocation(program, "aColor"); // connect to variable in shader
+    gl.vertexAttribPointer(aColor, 4, gl.FLOAT, false, 0, 0); // describing positions in array
+    gl.enableVertexAttribArray(aColor);
+}
+
 window.onload = function init() {
     canvas = document.getElementById("gl-canvas"); // get link to canvas
     gl = canvas.getContext("webgl2"); // get context for drawings
@@ -312,13 +362,6 @@ window.onload = function init() {
     const p2txt = document.getElementById("p2txt");
     const restart = document.getElementById("restart");
 
-    const centerX = document.getElementById("centerX");
-    const centerY = document.getElementById("centerY");
-    const radius = document.getElementById("radius");
-    const startAngle = document.getElementById("startAngle");
-    const endAngle = document.getElementById("endAngle");
-    const anticlockwise = document.getElementById("anticlockwise");
-
     start.addEventListener('click', () => { start.style.display = 'none', p1txt.style.display = 'none', p2txt.style.display = 'none',
     p1Name.style.display = 'none', p2Name.style.display = 'none', Drop1.style.display = 'inline-block', 
     Drop2.style.display = 'inline-block', Drop3.style.display = 'inline-block', Drop4.style.display = 'inline-block', 
@@ -338,32 +381,8 @@ function puckrender(){ //render function ONLY for the pucks.
     gl.drawArrays(gl.TRIANGLE_FAN, 0, positions.length); //draw pucks
 }
 
-function circlerender(){
-    function drawCircle()
-{
-    xCenterOfCircle = -.8;
-    yCenterOfCircle = -8;
-    centerOfCircle = vec2(-.8,-.8);
-    anglePerFan = (.5*Math.PI) / noOfFans;
-    verticesData = [centerOfCircle];
-
-    for(var i = 0; i <= noOfFans; i++)
-    {
-        var index = ATTRIBUTES * i + 1;
-        var angle = anglePerFan * (i+1);
-        var xCoordinate = xCenterOfCircle + Math.cos(angle) * radiusOfCircle;
-        var yCoordinate = yCenterOfCircle + Math.sin(angle) * radiusOfCircle;
-        document.write(xCoordinate);
-        document.write("\n");
-        document.write(yCoordinate);
-        var point = vec2(xCoordinate, yCoordinate);
-        verticesData.push(point);
-   }
-}
-
 function render()
 {
     gl.clear( gl.COLOR_BUFFER_BIT );
     gl.drawArrays( gl.TRIANGLE_FAN, 0, verticesData.length/ATTRIBUTES );
-}
 }
