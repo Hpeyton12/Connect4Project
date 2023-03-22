@@ -1,3 +1,28 @@
+   #p1txt{
+    position: absolute;
+    bottom: 20px;
+    left: 10px;
+   }
+   #p2txt{
+    position: absolute;
+    bottom: -10px;
+    left: 10px;
+   }
+   #p1Name{
+    position: absolute;
+    bottom: 37px;
+    left: 70px;
+   }
+   #p2Name{
+    position:absolute;
+    bottom: 5px;
+    left:70px;
+   }
+   #Victory_Status{
+    position:absolute;
+    bottom: 80px;
+    right: 600px; 
+   }
    #Turn_Status{
     position: absolute;
     top: 10px;
@@ -5,35 +30,46 @@
    }
    #submit{
     position:absolute;
-    bottom:-50px;
-    left:90px;
+    bottom:-30px;
+    left:30px;
+   }
+   #restart{
+    position:absolute;
+    display: none;
+    bottom: 65px;
+    left: 30px;
    }
     #one{
     position:absolute;
+    display: none;
     top:70px;
     left:30px;
     }
     
     #two{
     position:absolute;
+    display: none;
     top:70px;
     left: 140px;
     }
     
     #three{
     position: absolute;
+    display: none;
     top:70px;
     left:240px;
     }
     
     #four{
     position: absolute;
+    display: none;
     top:70px;
     left: 345px;
     }
     
     #five{
     position: absolute;
+    display: none;
     top:70px;
     left: 450px;
     }

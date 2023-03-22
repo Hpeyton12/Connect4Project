@@ -71,6 +71,7 @@ function playerHand(loc){   //takes parameter loc, which is the number location 
         console.log("Player 2 hand:", player2_hand); //for testing purposes... checks what is in player 2 hand after each click
         if (checkWin(player1_hand) == true){ //checks to see if hand has winning row combination 
             console.log("WINNER IN PLAYER HAND FUNCTION 1"); //checks to see if this function is operating properly.
+            document.getElementById("Victory_Status").innerHTML = document.getElementById("p1Name").value + " wins!";
         }
         player1Turn = false;
         DisplayNames();
@@ -82,6 +83,8 @@ function playerHand(loc){   //takes parameter loc, which is the number location 
         console.log("Player 2 hand:", player2_hand); //for testing purposes... checks what is in player 2 hand after each click
         if (checkWin(player2_hand) == true){
             console.log("WINNER IN PLAYER HAND FUNCTION 2"); //checks to see if this is working properly
+            document.getElementById("Victory_Status").innerHTML = document.getElementById("p2Name").value + " wins!";
+
         } 
         player1Turn = true;
         DisplayNames();
@@ -270,7 +273,14 @@ window.onload = function init() {
     const start = document.getElementById('submit');
     const p1Name = document.getElementById("p1Name");
     const p2Name = document.getElementById("p2Name");
-    start.addEventListener('click', () => { start.style.display = 'none', p1Name.style.display = 'none', p2Name.style.display = 'none', DisplayNames;});
+    const p1txt = document.getElementById("p1txt");
+    const p2txt = document.getElementById("p2txt");
+    const restart = document.getElementById("restart");
+
+    start.addEventListener('click', () => { start.style.display = 'none', p1txt.style.display = 'none', p2txt.style.display = 'none',
+    p1Name.style.display = 'none', p2Name.style.display = 'none', Drop1.style.display = 'inline-block', 
+    Drop2.style.display = 'inline-block', Drop3.style.display = 'inline-block', Drop4.style.display = 'inline-block', 
+    Drop5.style.display = 'inline-block', restart.style.display = 'inline-block', DisplayNames;});
 
     if (!gl) { alert("WebGL 2.0 isn't available"); }
     drawgrid();
@@ -279,4 +289,9 @@ window.onload = function init() {
 function vgridrender(){ //render function ONLY for the grid. We will use a separate one for the pucks since it can not utilize gl.LINES.
     gl.clear(gl.COLOR_BUFFER_BIT); // completely clear color
     gl.drawArrays(gl.LINES, 0, 16); // draw lines
+}
+
+function puckrender(){ //render function ONLY for the pucks.
+    gl.clear(gl.CCOLOR_BUFFER_BIT); //completely clear color
+    gl.drawArrays(gl.TRIANGLE_FAN, 0, positions.length); //draw pucks
 }

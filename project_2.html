@@ -7,6 +7,7 @@
           </div>
     </body>
     <h2 id="Turn_Status"></h2>
+    <h1 id="Victory_Status"></h1>
     <link href="project_2.css" rel="stylesheet">
     <button id = "one" value = "1" >Drop</button>
     <button id = "two" value = "2" >Drop</button>
@@ -52,16 +53,16 @@
     <br/>
 <div class = form>
 &emsp;&emsp;&emsp;&emsp;&emsp;
-Player 1: <input type="Text" id="p1Name" placeholder="Enter you name"/><br/>
-<br/>
+<p id = "p1txt">Player 1: </p><input type="Text" id="p1Name" placeholder="Enter you name"/><br/>
 <br/>
     <!--name for player 2--->
 &emsp;&emsp;&emsp;&emsp;&emsp;
-Player 2: <input type="Text" id="p2Name" placeholder="Enter your name"><br/>
+<p id = "p2txt">Player 2: </p><input type="Text" id="p2Name" placeholder="Enter your name"><br/>
 <br/>
 &emsp;&emsp;&emsp;&emsp;&emsp;
-<input type="submit" id="submit" placeholder="submit" onclick="DisplayNames()">
+<input type="submit" id="submit" value="start game" placeholder="start game" onclick="DisplayNames()">
 </div>
+<input type="submit" id="restart" value="restart" placeholder="restart" onclick="location.reload()">
 <br/>
 <br/> 
     <!--button if the player wants to know the rules--->
@@ -73,15 +74,15 @@ Player 2: <input type="Text" id="p2Name" placeholder="Enter your name"><br/>
 
     - This game, Connect-Four, is a tic-tac-toe game played by two players.<br /><br />
     - In this game, the players take turns placing pieces on a vertical board.<br /><br />
-    - The board is seven columns long and six rows high.<br /><br />
-    - Each player uses pieces of a specific color, usually black and red or sometimes yellow and red.<br /><br />
+    - This board is five columns long and five rows high.<br /><br />
+    - Each player uses pieces of a specific color. In this case, red or blue.<br /><br />
     - The goal is to be the first to get four pieces in a horizontal, vertical, or diagonal line.<br /><br />
     - Since the board is vertical, parts inserted in a certain column always fall in the lowest unoccupied row in that column.<br /><br />
-    - As soon as a column contains six parts, it is full, and no further parts can be placed on the column.<br /><br />
-    - Both the players begin with 21 similar pieces, and the first player to reach a series of four connected pieces wins the game.<br /><br />
-    - If all the men have played and neither player has four parts in a row, the game is a tie.<br /><br />
+    - As soon as a column contains five parts, it is full, and no further parts can be placed on the column.<br /><br />
+    - Both players begin with the same amount of pieces, and the first player to reach a series of four connected pieces wins the game.<br /><br />
+    - If all pucks have been played and neither player has four parts in a row, the game is a tie.<br /><br />
     - While Tic-Tac-Toe is the original game of getting pieces in a row, Connect 4 is another classic strategy game.<br /><br />
-    - Connect four is reminiscent of checkers and requires a lot of foresight.<br /><br />
+    - Connect four is reminiscent of checkers and requires good foresight.<br /><br />
 </p>
    
 <br/>
