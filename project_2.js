@@ -33,10 +33,10 @@ var visibleRules = false; //TO-DO: create a 'rules' button that switches screens
 function DisplayNames(){
 
     if (player1Turn == true){
-        playerTurnText.value = document.getElementById("p1Name").value + "'s turn";
+        document.getElementById("Turn_Status").innerHTML = document.getElementById("p1Name").value + "'s turn";
     }
-    else if (player1Turn = false){
-        playerTurnText.value = document.getElementById("p2Name").value + "'s turn";
+    else if (player1Turn == false){
+        document.getElementById("Turn_Status").innerHTML = document.getElementById("p2Name").value + "'s turn";
     }
 }
 
@@ -73,6 +73,7 @@ function playerHand(loc){   //takes parameter loc, which is the number location 
             console.log("WINNER IN PLAYER HAND FUNCTION 1"); //checks to see if this function is operating properly.
         }
         player1Turn = false;
+        DisplayNames();
     }
     else if (player1Turn == false){ //player 2 turn
         player2_hand.push(loc); //I can see this being an issue, because this is [] and possible_wins is [[]].
@@ -83,6 +84,7 @@ function playerHand(loc){   //takes parameter loc, which is the number location 
             console.log("WINNER IN PLAYER HAND FUNCTION 2"); //checks to see if this is working properly
         } 
         player1Turn = true;
+        DisplayNames();
     }
 }
 
@@ -264,6 +266,11 @@ window.onload = function init() {
 
     var Drop5 = document.getElementById("five");
     Drop5.addEventListener("click", function(){Drop(Drop5.value)});
+
+    const start = document.getElementById('submit');
+    const p1Name = document.getElementById("p1Name");
+    const p2Name = document.getElementById("p2Name");
+    start.addEventListener('click', () => { start.style.display = 'none', p1Name.style.display = 'none', p2Name.style.display = 'none', DisplayNames;});
 
     if (!gl) { alert("WebGL 2.0 isn't available"); }
     drawgrid();
