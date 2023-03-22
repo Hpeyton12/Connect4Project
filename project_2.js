@@ -76,8 +76,8 @@ function playerHand(loc){   //takes parameter loc, which is the number location 
         const Drop2 = document.getElementById("two");
         const Drop3 = document.getElementById("three");
         const Drop4 = document.getElementById("four");
-        
         const Drop5 = document.getElementById("five");
+
         if (checkWin(player1_hand) == true){ //checks to see if hand has winning row combination 
             console.log("WINNER IN PLAYER HAND FUNCTION 1"); //checks to see if this function is operating properly.
             document.getElementById("Victory_Status").innerHTML = document.getElementById("p1Name").value + " wins!";
@@ -102,8 +102,8 @@ function playerHand(loc){   //takes parameter loc, which is the number location 
         const Drop2 = document.getElementById("two");
         const Drop3 = document.getElementById("three");
         const Drop4 = document.getElementById("four");
-        
         const Drop5 = document.getElementById("five");
+
         if (checkWin(player2_hand) == true){
             console.log("WINNER IN PLAYER HAND FUNCTION 2"); //checks to see if this is working properly
             document.getElementById("Victory_Status").innerHTML = document.getElementById("p2Name").value + " wins!";
@@ -297,12 +297,21 @@ window.onload = function init() {
     var Drop5 = document.getElementById("five");
     Drop5.addEventListener("click", function(){Drop(Drop5.value)});
 
+
+
     const start = document.getElementById('submit');
     const p1Name = document.getElementById("p1Name");
     const p2Name = document.getElementById("p2Name");
     const p1txt = document.getElementById("p1txt");
     const p2txt = document.getElementById("p2txt");
     const restart = document.getElementById("restart");
+
+    const centerX = document.getElementById("centerX");
+    const centerY = document.getElementById("centerY");
+    const radius = document.getElementById("radius");
+    const startAngle = document.getElementById("startAngle");
+    const endAngle = document.getElementById("endAngle");
+    const anticlockwise = document.getElementById("anticlockwise");
 
     start.addEventListener('click', () => { start.style.display = 'none', p1txt.style.display = 'none', p2txt.style.display = 'none',
     p1Name.style.display = 'none', p2Name.style.display = 'none', Drop1.style.display = 'inline-block', 
@@ -322,3 +331,14 @@ function puckrender(){ //render function ONLY for the pucks.
     gl.clear(gl.CCOLOR_BUFFER_BIT); //completely clear color
     gl.drawArrays(gl.TRIANGLE_FAN, 0, positions.length); //draw pucks
 }
+const centerX = 100; // x coordinate of the center of the circle
+const centerY = 100; // y coordinate of the center of the circle
+const radius = 50; // radius of the circle
+const startAngle = 0; // starting angle of the circle
+const endAngle = Math.PI * 2; // ending angle of the circle
+const anticlockwise = false; // draw the circle clockwise
+
+// draw the circle
+ctx.beginPath();
+ctx.arc(centerX, centerY, radius, startAngle, endAngle, anticlockwise);
+ctx.stroke();
