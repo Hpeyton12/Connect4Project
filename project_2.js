@@ -6,6 +6,14 @@ var Ydirection = 0; //default y direction is 0, so that when the puck is dropped
 var colorpick = 0; //colorchoice for each puck. [1] for player1 and [2] for player2.
 var goingY = false;
 var yShift = 0.0; //we will use yShift, as on gasketAnimate modified hw assignment, except the pucks will only go down and stop.
+var xCenterOfCircle;
+var yCenterOfCircle;
+var centerOfCircle;
+var radiusOfCircle = 200;
+var ATTRIBUTES = 2;
+var noOfFans = 80;
+var anglePerFan;
+var verticesData = []
 var colors = [
     vec4(0.0, 0.0, 0.0, 1.0), // black
     vec4(1.0, 0.0, 0.0, 1.0), // red
@@ -297,8 +305,6 @@ window.onload = function init() {
     var Drop5 = document.getElementById("five");
     Drop5.addEventListener("click", function(){Drop(Drop5.value)});
 
-
-
     const start = document.getElementById('submit');
     const p1Name = document.getElementById("p1Name");
     const p2Name = document.getElementById("p2Name");
@@ -331,14 +337,33 @@ function puckrender(){ //render function ONLY for the pucks.
     gl.clear(gl.CCOLOR_BUFFER_BIT); //completely clear color
     gl.drawArrays(gl.TRIANGLE_FAN, 0, positions.length); //draw pucks
 }
-const centerX = 100; // x coordinate of the center of the circle
-const centerY = 100; // y coordinate of the center of the circle
-const radius = 50; // radius of the circle
-const startAngle = 0; // starting angle of the circle
-const endAngle = Math.PI * 2; // ending angle of the circle
-const anticlockwise = false; // draw the circle clockwise
 
-// draw the circle
-ctx.beginPath();
-ctx.arc(centerX, centerY, radius, startAngle, endAngle, anticlockwise);
-ctx.stroke();
+function circlerender(){
+    function drawCircle()
+{
+    xCenterOfCircle = -.8;
+    yCenterOfCircle = -8;
+    centerOfCircle = vec2(-.8,-.8);
+    anglePerFan = (.5*Math.PI) / noOfFans;
+    verticesData = [centerOfCircle];
+
+    for(var i = 0; i <= noOfFans; i++)
+    {
+        var index = ATTRIBUTES * i + 1;
+        var angle = anglePerFan * (i+1);
+        var xCoordinate = xCenterOfCircle + Math.cos(angle) * radiusOfCircle;
+        var yCoordinate = yCenterOfCircle + Math.sin(angle) * radiusOfCircle;
+        document.write(xCoordinate);
+        document.write("\n");
+        document.write(yCoordinate);
+        var point = vec2(xCoordinate, yCoordinate);
+        verticesData.push(point);
+   }
+}
+
+function render()
+{
+    gl.clear( gl.COLOR_BUFFER_BIT );
+    gl.drawArrays( gl.TRIANGLE_FAN, 0, verticesData.length/ATTRIBUTES );
+}
+}
