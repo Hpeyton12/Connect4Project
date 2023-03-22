@@ -64,27 +64,54 @@ function checkWin(hand){ //takes parameter hand, checks whether most recent play
 }
 
 function playerHand(loc){   //takes parameter loc, which is the number location on the chart and adds this to player1_hand or 2, based on turn.
+    
     if (player1Turn == true){ //player 1 turn
         player1_hand.push(loc); //I can see this being an issue, because this is [] and possible_wins is [[]].
         player1_hand = player1_hand.sort((a, b) => a - b);
+
         console.log("Player 1 hand:", player1_hand); //for testing purposes... checks what is in player 1 hand after each click
         console.log("Player 2 hand:", player2_hand); //for testing purposes... checks what is in player 2 hand after each click
+        
+        const Drop1 = document.getElementById("one");
+        const Drop2 = document.getElementById("two");
+        const Drop3 = document.getElementById("three");
+        const Drop4 = document.getElementById("four");
+        
+        const Drop5 = document.getElementById("five");
         if (checkWin(player1_hand) == true){ //checks to see if hand has winning row combination 
             console.log("WINNER IN PLAYER HAND FUNCTION 1"); //checks to see if this function is operating properly.
             document.getElementById("Victory_Status").innerHTML = document.getElementById("p1Name").value + " wins!";
+            Drop1.style.display = 'none';
+            Drop2.style.display = 'none'; 
+            Drop3.style.display = 'none'; 
+            Drop4.style.display = 'none';
+            Drop5.style.display = 'none';
         }
         player1Turn = false;
         DisplayNames();
     }
     else if (player1Turn == false){ //player 2 turn
+
         player2_hand.push(loc); //I can see this being an issue, because this is [] and possible_wins is [[]].
         player2_hand = player2_hand.sort((a, b) => a - b);
+
         console.log("Player 1 hand:", player1_hand); //for testing purposes... checks what is in player 1 hand after each click
         console.log("Player 2 hand:", player2_hand); //for testing purposes... checks what is in player 2 hand after each click
+        
+        const Drop1 = document.getElementById("one");
+        const Drop2 = document.getElementById("two");
+        const Drop3 = document.getElementById("three");
+        const Drop4 = document.getElementById("four");
+        
+        const Drop5 = document.getElementById("five");
         if (checkWin(player2_hand) == true){
             console.log("WINNER IN PLAYER HAND FUNCTION 2"); //checks to see if this is working properly
             document.getElementById("Victory_Status").innerHTML = document.getElementById("p2Name").value + " wins!";
-
+            Drop1.style.display = 'none';
+            Drop2.style.display = 'none'; 
+            Drop3.style.display = 'none';
+            Drop4.style.display = 'none';
+            Drop5.style.display = 'none';
         } 
         player1Turn = true;
         DisplayNames();
