@@ -9,10 +9,10 @@ var yShift = 0.0; //we will use yShift, as on gasketAnimate modified hw assignme
 var xCenterOfCircle;
 var yCenterOfCircle;
 var centerOfCircle;
+var centerX;
+var centerY;
 var radiusOfCircle = .5;
 var ATTRIBUTES = 2;
-var noOfFans = 80;
-var anglePerFan;
 var verticesData = []
 var colors = [
     vec4(0.0, 0.0, 0.0, 1.0), // black
@@ -289,11 +289,49 @@ function drawgrid(){ //draws a 5x5 grid on page loadup
 function drawcircle(){
 
     //set center of the circle vertex to 3 at (1,1)
-    centerX = 1;
-    centerY = 1;
+    var coordinates = [
+    -0.8,0.8,
+    -0.4,0.8,
+    0.0,0.8,
+    0.4,0.8,
+    0.8,0.8, //end of row 1 (1-5)
 
-    radius = dist(centerX, centerY, .5, .5);
+    -0.8,0.4,
+    -0.4,0.4,
+    0.0,0.4,
+    0.4,0.4,
+    0.8,0.4, //end of row 2 (6-10)
 
+    -0.8,0.0,
+    -0.4,0.0,
+    0.0,0.0,
+    0.4,0.0,
+    0.8,0.0, //end of row 3 (11,15)
+
+    -0.8,-0.4,
+    -0.4,-0.4,
+    0.0,-0.4,
+    0.4,-0.4,
+    0.8,-0.8 //end of row 4 (16-20)
+
+    -0.8,-0.8,
+    -0.4,-0.8,
+    0.0,-0.8,
+    0.4,-0.8,
+    0.8,-0.8 //end of row 5 (21-25)
+    ]; //center coordinates needed for the pucks to be drawn
+    
+    centerX = coordinates[2*loc-1];
+    centerY = coordinates[2*loc];
+    var radius = 0.15;
+    var center = vec2(centerX,centerY);
+
+    pos.push(center);
+    for (i = 0; i <= numPositions; i++) {
+        pos.push(center + vec2(radius * Math.cos(i * 2 * Math.PI / 200),radius * Math.sin(i * 2 * Math.PI / 200)));
+        c.push(colors[colorpick]);
+
+    }
     function draw() {
         background(0);
     
@@ -323,7 +361,7 @@ function drawcircle(){
     // load data into GPU
     var bufferId = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, bufferId); // What comes next should affect bufferId
-    gl.bufferData(gl.ARRAY_BUFFER, flatten(positions), gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, flatten(pos), gl.STATIC_DRAW);
 
     // tie aPosition to the data in the buffer
     var aPosition = gl.getAttribLocation(program, "aPosition"); // connect to variable in shader
@@ -339,6 +377,9 @@ function drawcircle(){
     var aColor = gl.getAttribLocation(program, "aColor"); // connect to variable in shader
     gl.vertexAttribPointer(aColor, 4, gl.FLOAT, false, 0, 0); // describing positions in array
     gl.enableVertexAttribArray(aColor);
+
+    positions = [];
+    c = [];
 }
 
 window.onload = function init() {
@@ -374,7 +415,7 @@ window.onload = function init() {
 
     if (!gl) { alert("WebGL 2.0 isn't available"); }
     drawgrid();
-    drawcircle();
+    //drawcircle();
 }
 
 function vgridrender(){ //render function ONLY for the grid. We will use a separate one for the pucks since it can not utilize gl.LINES.
