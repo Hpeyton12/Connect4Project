@@ -294,6 +294,10 @@ function drawcircle(){
 
     radius = dist(centerX, centerY, .5, .5);
 
+    function draw() {
+        background(0);
+    
+
     let vertex1X = centerX + radius * cos(angle); //calculate coordinates for each vertex of the rotating triangle
     let vertex1Y = centerY + radius * sin(angle);
     let vertex2X = centerX + radius * cos(angle + TWO_PI/3);
@@ -308,6 +312,7 @@ function drawcircle(){
     if (angle >= TWO_PI) { // wrap around when angle exceeds full rotation
     angle = 0;
   }
+}
     
     gl.viewport(0, 0, canvas.width, canvas.height);
     gl.clearColor(1.0, 1.0, 1.0, 1.0); // clear color then make canvas white to start
@@ -369,6 +374,7 @@ window.onload = function init() {
 
     if (!gl) { alert("WebGL 2.0 isn't available"); }
     drawgrid();
+    drawcircle();
 }
 
 function vgridrender(){ //render function ONLY for the grid. We will use a separate one for the pucks since it can not utilize gl.LINES.
