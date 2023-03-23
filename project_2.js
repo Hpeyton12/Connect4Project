@@ -98,10 +98,14 @@ function playerHand(loc){   //takes parameter loc, which is the number location 
         player1Turn = false;
         DisplayNames();
     }
+    
     else if (player1Turn == false){ //player 2 turn
 
         player2_hand.push(loc); //I can see this being an issue, because this is [] and possible_wins is [[]].
         player2_hand = player2_hand.sort((a, b) => a - b);
+
+        var loc2 = loc;
+        drawcircle(loc2); //call drawCircle from Drop
 
         console.log("Player 1 hand:", player1_hand); //for testing purposes... checks what is in player 1 hand after each click
         console.log("Player 2 hand:", player2_hand); //for testing purposes... checks what is in player 2 hand after each click
@@ -286,7 +290,7 @@ function drawgrid(){ //draws a 5x5 grid on page loadup
     c = []
 }
 
-function drawcircle(loc){
+function drawCircle(loc){
 
     var coordinates = [ 
 
@@ -399,6 +403,7 @@ window.onload = function init() {
 
     if (!gl) { alert("WebGL 2.0 isn't available"); }
     drawgrid();
+    drawcircle();
 }
 
 function vgridrender(){ //render function ONLY for the grid. We will use a separate one for the pucks since it can not utilize gl.LINES.
@@ -414,5 +419,5 @@ function vcirclerender(){ //render function ONLY for the pucks.
 function render()
 {
     gl.clear( gl.COLOR_BUFFER_BIT );
-    gl.drawArrays( gl.TRIANGLE_FAN, 0, verticesData.length/ATTRIBUTES );
+    gl.drawArrays( gl.TRIANGLE_FAN, 0, verticesData.length/ATTRIBUTES);
 }
