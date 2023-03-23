@@ -288,7 +288,7 @@ function drawgrid(){ //draws a 5x5 grid on page loadup
 
 function drawcircle(loc){
 
-    var coordinates = new Float32Array([ 
+    var coordinates = [ 
 
     //set center of the circle vertex to 3 at (1,1)
         0.8,0.8,
@@ -320,7 +320,7 @@ function drawcircle(loc){
         0.0,-0.8,
         0.4,-0.8,
         0.8,-0.8 //end of row 5 (21-25)
-        ]); //center coordinates needed for the pucks to be drawn
+        ]; //center coordinates needed for the pucks to be drawn
         positions.push(coordinates);
     
     centerX = coordinates[2*loc-1];
@@ -330,7 +330,7 @@ function drawcircle(loc){
 
     pos.push(center);
     for (i = 0; i <= numPositions; i++) {
-        pos.push(center + vec2(radius * Math.cos(i * 2 * Math.PI / 200),radius * Math.sin(i * 2 * Math.PI / 200)));
+        pos.push(center + vec2(radius * Math.cos(i * 2 * Math.PI / 360),radius * Math.sin(i * 2 * Math.PI / 200)));
         c.push(colors[colorpick]);
 
     }
