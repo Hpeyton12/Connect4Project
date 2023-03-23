@@ -289,8 +289,8 @@ function drawgrid(){ //draws a 5x5 grid on page loadup
 function drawcircle(){
 
     //set center of the circle vertex to 3 at (1,1)
-    centerX = 1;
-    centerY = 1;
+    centerX = 0;
+    centerY = 0;
 
     radius = dist(centerX, centerY, .5, .5);
 
