@@ -9,10 +9,10 @@ var yShift = 0.0; //we will use yShift, as on gasketAnimate modified hw assignme
 var xCenterOfCircle;
 var yCenterOfCircle;
 var centerOfCircle;
+var centerX;
+var centerY;
 var radiusOfCircle = .5;
 var ATTRIBUTES = 2;
-var noOfFans = 80;
-var anglePerFan;
 var verticesData = []
 var colors = [
     vec4(0.0, 0.0, 0.0, 1.0), // black
@@ -286,33 +286,54 @@ function drawgrid(){ //draws a 5x5 grid on page loadup
     c = []
 }
 
-function drawcircle(){
+function drawcircle(loc){
+
+    var coordinates = [ 
 
     //set center of the circle vertex to 3 at (1,1)
-    centerX = 0;
-    centerY = 0;
-
-    radius = dist(centerX, centerY, .5, .5);
-
-    function draw() {
-        background(0);
+        0.8,0.8,
+        -0.4,0.8,
+        0.0,0.8,
+        0.4,0.8,
+        0.8,0.8, //end of row 1 (1-5)
     
+        -0.8,0.4,
+        -0.4,0.4,
+        0.0,0.4,
+        0.4,0.4,
+        0.8,0.4, //end of row 2 (6-10)
+    
+        -0.8,0.0,
+        -0.4,0.0,
+        0.0,0.0,
+        0.4,0.0,
+        0.8,0.0, //end of row 3 (11,15)
+    
+        -0.8,-0.4,
+        -0.4,-0.4,
+        0.0,-0.4,
+        0.4,-0.4,
+        0.8,-0.8 //end of row 4 (16-20)
+    
+        -0.8,-0.8,
+        -0.4,-0.8,
+        0.0,-0.8,
+        0.4,-0.8,
+        0.8,-0.8 //end of row 5 (21-25)
+        ]; //center coordinates needed for the pucks to be drawn
+        positions.push(coordinates);
+    
+    centerX = coordinates[2*loc-1];
+    centerY = coordinates[2*loc];
+    var radius = 0.15;
+    var center = vec2(centerX,centerY);
 
-    let vertex1X = centerX + radius * cos(angle); //calculate coordinates for each vertex of the rotating triangle
-    let vertex1Y = centerY + radius * sin(angle);
-    let vertex2X = centerX + radius * cos(angle + TWO_PI/3);
-    let vertex2Y = centerY + radius * sin(angle + TWO_PI/3);
-    let vertex3X = centerX + radius * cos(angle + 2*TWO_PI/3);
-    let vertex3Y = centerY + radius * sin(angle + 2*TWO_PI/3);
-  
-    triangle(vertex1X, vertex1Y, vertex2X, vertex2Y, vertex3X, vertex3Y); // draw triangle with vertices based on calculated coordinates
- 
-    angle += TWO_PI/360; // increment angle to rotate triangle
-  
-    if (angle >= TWO_PI) { // wrap around when angle exceeds full rotation
-    angle = 0;
-  }
-}
+    pos.push(center);
+    for (i = 0; i <= numPositions; i++) {
+        pos.push(center + vec2(radius * Math.cos(i * 2 * Math.PI / 360),radius * Math.sin(i * 2 * Math.PI / 200)));
+        c.push(colors[colorpick]);
+
+    }
     
     gl.viewport(0, 0, canvas.width, canvas.height);
     gl.clearColor(1.0, 1.0, 1.0, 1.0); // clear color then make canvas white to start
@@ -323,7 +344,7 @@ function drawcircle(){
     // load data into GPU
     var bufferId = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, bufferId); // What comes next should affect bufferId
-    gl.bufferData(gl.ARRAY_BUFFER, flatten(positions), gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, flatten(pos), gl.STATIC_DRAW);
 
     // tie aPosition to the data in the buffer
     var aPosition = gl.getAttribLocation(program, "aPosition"); // connect to variable in shader
@@ -339,6 +360,10 @@ function drawcircle(){
     var aColor = gl.getAttribLocation(program, "aColor"); // connect to variable in shader
     gl.vertexAttribPointer(aColor, 4, gl.FLOAT, false, 0, 0); // describing positions in array
     gl.enableVertexAttribArray(aColor);
+
+    drawcircle();
+    positions = [];
+    c = [];
 }
 
 window.onload = function init() {
@@ -374,7 +399,6 @@ window.onload = function init() {
 
     if (!gl) { alert("WebGL 2.0 isn't available"); }
     drawgrid();
-    drawcircle();
 }
 
 function vgridrender(){ //render function ONLY for the grid. We will use a separate one for the pucks since it can not utilize gl.LINES.
@@ -382,7 +406,7 @@ function vgridrender(){ //render function ONLY for the grid. We will use a separ
     gl.drawArrays(gl.LINES, 0, 16); // draw lines
 }
 
-function puckrender(){ //render function ONLY for the pucks.
+function vcirclerender(){ //render function ONLY for the pucks.
     gl.clear(gl.CCOLOR_BUFFER_BIT); //completely clear color
     gl.drawArrays(gl.TRIANGLE_FAN, 0, positions.length); //draw pucks
 }
