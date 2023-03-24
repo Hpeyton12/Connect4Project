@@ -337,9 +337,9 @@ function drawCircle(loc){
     var center = vec2(centerX,centerY);
 
     pos.push(center);
-    for (i = 0; i <= 5000; i++) {
+    for (i = 0; i <= 5000; i++) { //for loop to add points to pos array
         pos.push(center + vec2(radius * Math.cos(i * 2 * Math.PI / 360),radius * Math.sin(i * 2 * Math.PI / 200)));
-        c.push(colors[colorpick]);
+        c.push(colors[colorpick]); //add color info to c
     }
     console.log(pos);
     
