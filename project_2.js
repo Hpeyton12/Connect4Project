@@ -77,6 +77,8 @@ function playerHand(loc){   //takes parameter loc, which is the number location 
     if (player1Turn == true){ //player 1 turn
         player1_hand.push(loc); //I can see this being an issue, because this is [] and possible_wins is [[]].
         player1_hand = player1_hand.sort((a, b) => a - b);
+        
+        colorpick = 1;
         var loc2 = loc;
         drawCircle(loc2);
 
@@ -106,6 +108,7 @@ function playerHand(loc){   //takes parameter loc, which is the number location 
 
         player2_hand.push(loc); //I can see this being an issue, because this is [] and possible_wins is [[]].
         player2_hand = player2_hand.sort((a, b) => a - b);
+        colorpick = 1;
 
         var loc2 = loc;
         drawCircle(loc2); //call drawCircle from Drop
@@ -296,7 +299,6 @@ function drawgrid(){ //draws a 5x5 grid on page loadup
 function drawCircle(loc){
 
     var coordinates = [ 
-
     //set center of the circle vertex to 3 at (1,1)
         -0.8,0.8,
         -0.4,0.8,
@@ -320,7 +322,7 @@ function drawCircle(loc){
         -0.4,-0.4,
         0.0,-0.4,
         0.4,-0.4,
-        0.8,-0.8 //end of row 4 (16-20)
+        0.8,-0.4 //end of row 4 (16-20)
     
         -0.8,-0.8,
         -0.4,-0.8,
