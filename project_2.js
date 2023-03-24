@@ -337,11 +337,12 @@ function drawCircle(loc){
     var center = vec2(centerX,centerY);
 
     pos.push(center);
-    for (i = 0; i <= 5000; i++) { //for loop to add points to pos array
-        pos.push(center + vec2(radius * Math.cos(i * 2 * Math.PI / 360),radius * Math.sin(i * 2 * Math.PI / 200)));
+    for (i = 0; i < 360; i++) {
+        pos.push(add (center, vec2(radius * Math.cos(i * 2 * Math.PI / 360),radius * Math.sin(i * 2 * Math.PI / 360))));
         c.push(colors[colorpick]); //add color info to c
+
     }
-    console.log(pos);
+    //console.log(pos);
     
     gl.viewport(0, 0, canvas.width, canvas.height);
     gl.clearColor(1.0, 1.0, 1.0, 1.0); // clear color then make canvas white to start
@@ -352,7 +353,7 @@ function drawCircle(loc){
     // load data into GPU
     var bufferId = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, bufferId); // What comes next should affect bufferId
-    gl.bufferData(gl.ARRAY_BUFFER, flatten(pos), gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, flatten(pos), gl.STATIC_DRAW); //flatten coordinates
 
     // tie aPosition to the data in the buffer
     var aPosition = gl.getAttribLocation(program, "aPosition"); // connect to variable in shader
@@ -413,8 +414,9 @@ function vgridrender(){ //render function ONLY for the grid. We will use a separ
     gl.clear(gl.COLOR_BUFFER_BIT); // completely clear color
     gl.drawArrays(gl.LINES, 0, 16); // draw lines
 }
-
+60
 function vcirclerender(){ //render function ONLY for the pucks.
-    gl.clear(gl.COLOR_BUFFER_BIT); //completely clear color
-    gl.drawArrays(gl.POINTS, 0, pos.length); //draw pucks
+   // gl.clear(gl.COLOR_BUFFER_BIT); //completely clear color
+   for (i = 0; i < pos; i++) //looping number of circles tracked in game
+    gl.drawArrays(gl.TRIANGLE_FAN, 361 * i, 361); //draw pucks
 }
