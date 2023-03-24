@@ -1,20 +1,10 @@
 var gl; // link to what we are drawing on
 var canvas;
-var numPositions = 5000; //number of positions for the color. 
+var numPositions = 2500; //number of positions for the color. 
 var positions = []; // array of points
 var pos = [];
-var Ydirection = 0; //default y direction is 0, so that when the puck is dropped this will change to -1. 
+var center = [];
 var colorpick = 0; //colorchoice for each puck. [1] for player1 and [2] for player2.
-var goingY = false;
-var yShift = 0.0; //we will use yShift, as on gasketAnimate modified hw assignment, except the pucks will only go down and stop.
-var xCenterOfCircle;
-var yCenterOfCircle;
-var centerOfCircle;
-var centerX;
-var centerY;
-var radiusOfCircle = .5;
-var ATTRIBUTES = 2;
-var verticesData = []
 var colors = [
     vec4(0.0, 0.0, 0.0, 1.0), // black
     vec4(1.0, 0.0, 0.0, 1.0), // red
@@ -110,7 +100,7 @@ function playerHand(loc){   //takes parameter loc, which is the number location 
         colorpick = 2;
         var loc2 = loc;
         drawCircle(loc2); //call drawCircle from Drop
-
+    
         console.log("Player 1 hand:", player1_hand); //for testing purposes... checks what is in player 1 hand after each click
         console.log("Player 2 hand:", player2_hand); //for testing purposes... checks what is in player 2 hand after each click
         
@@ -295,7 +285,8 @@ function drawgrid(){ //draws a 5x5 grid on page loadup
 }
 
 function drawCircle(loc){
-
+    pos = [];
+    center = [];
     var coordinates = [ 
     //set center of the circle vertex to 3 at (1,1)
         -0.8,0.8,
@@ -329,46 +320,47 @@ function drawCircle(loc){
         0.8,-0.8 //end of row 5 (21-25)
         ]; //center coordinates needed for the pucks to be drawn
     
-    centerX = coordinates[2*loc-2];
-    centerY = coordinates[2*loc-1];
+    center.push(coordinates[(2*loc)-2]);
+    center.push(coordinates[(2*loc)-1]);
     var radius = 0.15;
-    var center = vec2(centerX,centerY);
+    var center_point = vec2(center[0],center[1]);
 
-    pos.push(center);
-    for (var i = 0; i < 360; i++) {
-        pos.push(add (center, vec2(radius * Math.cos(i * 2 * Math.PI / 360),radius * Math.sin(i * 2 * Math.PI / 360))));
+    pos.push(center_point);
+    for (var i = 0; i < 361; i++) {
+        pos.push(add (center_point, vec2(radius * Math.cos(i * 2 * Math.PI / 361),radius * Math.sin(i * 2 * Math.PI / 361))));
         c.push(colors[colorpick]); //add color info to c
 
     }
+    center = [];
     //console.log(pos);
     
     gl.viewport(0, 0, canvas.width, canvas.height);
-    gl.clearColor(1.0, 1.0, 1.0, 1.0); // clear color then make canvas white to start
+    //gl.clearColor(1.0, 1.0, 1.0, 1.0); // clear color then make canvas white to start
 
     var program = initShaders(gl, "vertex-shader", "fragment-shader"); //compiles shaders
     gl.useProgram(program);
 
     // load data into GPU
-    var bufferId = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, bufferId); // What comes next should affect bufferId
+    var bufferId2 = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, bufferId2); // What comes next should affect bufferId
     gl.bufferData(gl.ARRAY_BUFFER, flatten(pos), gl.STATIC_DRAW); //flatten coordinates
 
     // tie aPosition to the data in the buffer
-    var aPosition = gl.getAttribLocation(program, "aPosition"); // connect to variable in shader
-    gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0); // describing positions in the array
-    gl.enableVertexAttribArray(aPosition);
+    var aPosition2 = gl.getAttribLocation(program, "aPosition"); // connect to variable in shader
+    gl.vertexAttribPointer(aPosition2, 2, gl.FLOAT, false, 0, 0); // describing positions in the array
+    gl.enableVertexAttribArray(aPosition2);
 
     // load data into GPU
-    var bufferColorId = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, bufferColorId); // what comes next should affect bufferId
+    var bufferColorId2 = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, bufferColorId2); // what comes next should affect bufferId
     gl.bufferData(gl.ARRAY_BUFFER, flatten(c), gl.STATIC_DRAW);
 
     // tie color info to the data in the buffer
-    var aColor = gl.getAttribLocation(program, "aColor"); // connect to variable in shader
-    gl.vertexAttribPointer(aColor, 4, gl.FLOAT, false, 0, 0); // describing positions in array
-    gl.enableVertexAttribArray(aColor);
+    var aColor2 = gl.getAttribLocation(program, "aColor"); // connect to variable in shader
+    gl.vertexAttribPointer(aColor2, 4, gl.FLOAT, false, 0, 0); // describing positions in array
+    gl.enableVertexAttribArray(aColor2);
 
-    vcirclerender(); //THIS IS OUT PROBLEM I THINK
+    requestAnimationFrame(vcirclerender); //THIS IS OUT PROBLEM I THINK
     pos = [];
     c = [];
 }
