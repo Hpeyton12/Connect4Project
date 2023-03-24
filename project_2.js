@@ -369,7 +369,7 @@ function drawCircle(loc){
     gl.vertexAttribPointer(aColor, 4, gl.FLOAT, false, 0, 0); // describing positions in array
     gl.enableVertexAttribArray(aColor);
 
-    vcirclerender();
+    vcirclerender(); //THIS IS OUT PROBLEM I THINK
     pos = [];
     c = [];
 }
