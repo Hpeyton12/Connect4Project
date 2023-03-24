@@ -77,7 +77,6 @@ function playerHand(loc){   //takes parameter loc, which is the number location 
     if (player1Turn == true){ //player 1 turn
         player1_hand.push(loc); //I can see this being an issue, because this is [] and possible_wins is [[]].
         player1_hand = player1_hand.sort((a, b) => a - b);
-        
         colorpick = 1;
         var loc2 = loc;
         drawCircle(loc2);
@@ -108,8 +107,7 @@ function playerHand(loc){   //takes parameter loc, which is the number location 
 
         player2_hand.push(loc); //I can see this being an issue, because this is [] and possible_wins is [[]].
         player2_hand = player2_hand.sort((a, b) => a - b);
-        colorpick = 1;
-
+        colorpick = 2;
         var loc2 = loc;
         drawCircle(loc2); //call drawCircle from Drop
 
@@ -337,7 +335,7 @@ function drawCircle(loc){
     var center = vec2(centerX,centerY);
 
     pos.push(center);
-    for (i = 0; i < 360; i++) {
+    for (var i = 0; i < 360; i++) {
         pos.push(add (center, vec2(radius * Math.cos(i * 2 * Math.PI / 360),radius * Math.sin(i * 2 * Math.PI / 360))));
         c.push(colors[colorpick]); //add color info to c
 
@@ -414,9 +412,9 @@ function vgridrender(){ //render function ONLY for the grid. We will use a separ
     gl.clear(gl.COLOR_BUFFER_BIT); // completely clear color
     gl.drawArrays(gl.LINES, 0, 16); // draw lines
 }
-60
+
 function vcirclerender(){ //render function ONLY for the pucks.
    // gl.clear(gl.COLOR_BUFFER_BIT); //completely clear color
-   for (i = 0; i < pos; i++) //looping number of circles tracked in game
+   for (var i = 0; i < numPositions; i++) //looping number of circles tracked in game
     gl.drawArrays(gl.TRIANGLE_FAN, 361 * i, 361); //draw pucks
 }
