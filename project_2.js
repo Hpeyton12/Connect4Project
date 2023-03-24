@@ -2,6 +2,7 @@ var gl; // link to what we are drawing on
 var canvas;
 var numPositions = 5000; //number of positions for the color. 
 var positions = []; // array of points
+var pos = [];
 var Ydirection = 0; //default y direction is 0, so that when the puck is dropped this will change to -1. 
 var colorpick = 0; //colorchoice for each puck. [1] for player1 and [2] for player2.
 var goingY = false;
@@ -76,6 +77,8 @@ function playerHand(loc){   //takes parameter loc, which is the number location 
     if (player1Turn == true){ //player 1 turn
         player1_hand.push(loc); //I can see this being an issue, because this is [] and possible_wins is [[]].
         player1_hand = player1_hand.sort((a, b) => a - b);
+        var loc2 = loc;
+        drawCircle(loc2);
 
         console.log("Player 1 hand:", player1_hand); //for testing purposes... checks what is in player 1 hand after each click
         console.log("Player 2 hand:", player2_hand); //for testing purposes... checks what is in player 2 hand after each click
@@ -105,7 +108,7 @@ function playerHand(loc){   //takes parameter loc, which is the number location 
         player2_hand = player2_hand.sort((a, b) => a - b);
 
         var loc2 = loc;
-        drawcircle(loc2); //call drawCircle from Drop
+        drawCircle(loc2); //call drawCircle from Drop
 
         console.log("Player 1 hand:", player1_hand); //for testing purposes... checks what is in player 1 hand after each click
         console.log("Player 2 hand:", player2_hand); //for testing purposes... checks what is in player 2 hand after each click
@@ -295,7 +298,7 @@ function drawCircle(loc){
     var coordinates = [ 
 
     //set center of the circle vertex to 3 at (1,1)
-        0.8,0.8,
+        -0.8,0.8,
         -0.4,0.8,
         0.0,0.8,
         0.4,0.8,
@@ -325,10 +328,9 @@ function drawCircle(loc){
         0.4,-0.8,
         0.8,-0.8 //end of row 5 (21-25)
         ]; //center coordinates needed for the pucks to be drawn
-        positions.push(coordinates);
     
-    centerX = coordinates[2*loc-1];
-    centerY = coordinates[2*loc];
+    centerX = coordinates[2*loc-2];
+    centerY = coordinates[2*loc-1];
     var radius = 0.15;
     var center = vec2(centerX,centerY);
 
@@ -336,7 +338,6 @@ function drawCircle(loc){
     for (i = 0; i <= numPositions; i++) {
         pos.push(center + vec2(radius * Math.cos(i * 2 * Math.PI / 360),radius * Math.sin(i * 2 * Math.PI / 200)));
         c.push(colors[colorpick]);
-
     }
     
     gl.viewport(0, 0, canvas.width, canvas.height);
@@ -365,8 +366,8 @@ function drawCircle(loc){
     gl.vertexAttribPointer(aColor, 4, gl.FLOAT, false, 0, 0); // describing positions in array
     gl.enableVertexAttribArray(aColor);
 
-    drawcircle();
-    positions = [];
+    requestAnimationFrame(vcirclerender);
+    pos = [];
     c = [];
 }
 
@@ -403,7 +404,6 @@ window.onload = function init() {
 
     if (!gl) { alert("WebGL 2.0 isn't available"); }
     drawgrid();
-    drawcircle();
 }
 
 function vgridrender(){ //render function ONLY for the grid. We will use a separate one for the pucks since it can not utilize gl.LINES.
@@ -412,12 +412,6 @@ function vgridrender(){ //render function ONLY for the grid. We will use a separ
 }
 
 function vcirclerender(){ //render function ONLY for the pucks.
-    gl.clear(gl.CCOLOR_BUFFER_BIT); //completely clear color
-    gl.drawArrays(gl.TRIANGLE_FAN, 0, positions.length); //draw pucks
-}
-
-function render()
-{
-    gl.clear( gl.COLOR_BUFFER_BIT );
-    gl.drawArrays( gl.TRIANGLE_FAN, 0, verticesData.length/ATTRIBUTES);
+    gl.clear(gl.COLOR_BUFFER_BIT); //completely clear color
+    gl.drawArrays(gl.TRIANGLE_FAN, 0, pos.length); //draw pucks
 }
