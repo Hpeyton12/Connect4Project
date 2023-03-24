@@ -285,7 +285,6 @@ function drawgrid(){ //draws a 5x5 grid on page loadup
 }
 
 function drawCircle(loc){
-    pos = [];
     center = [];
     var coordinates = [ 
     //set center of the circle vertex to 3 at (1,1)
@@ -326,8 +325,8 @@ function drawCircle(loc){
     var center_point = vec2(center[0],center[1]);
 
     pos.push(center_point);
-    for (var i = 0; i < 361; i++) {
-        pos.push(add (center_point, vec2(radius * Math.cos(i * 2 * Math.PI / 361),radius * Math.sin(i * 2 * Math.PI / 361))));
+    for (var i = 0; i < 360; i++) {
+        pos.push(add (center_point, vec2(radius * Math.cos(i * 2 * Math.PI / 360),radius * Math.sin(i * 2 * Math.PI / 360))));
         c.push(colors[colorpick]); //add color info to c
 
     }
@@ -361,8 +360,6 @@ function drawCircle(loc){
     gl.enableVertexAttribArray(aColor2);
 
     requestAnimationFrame(vcirclerender); //THIS IS OUT PROBLEM I THINK
-    pos = [];
-    c = [];
 }
 
 window.onload = function init() {
