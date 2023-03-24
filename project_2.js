@@ -337,10 +337,11 @@ function drawCircle(loc){
     var center = vec2(centerX,centerY);
 
     pos.push(center);
-    for (i = 0; i <= numPositions; i++) {
+    for (i = 0; i <= 5000; i++) {
         pos.push(center + vec2(radius * Math.cos(i * 2 * Math.PI / 360),radius * Math.sin(i * 2 * Math.PI / 200)));
         c.push(colors[colorpick]);
     }
+    console.log(pos);
     
     gl.viewport(0, 0, canvas.width, canvas.height);
     gl.clearColor(1.0, 1.0, 1.0, 1.0); // clear color then make canvas white to start
@@ -368,7 +369,7 @@ function drawCircle(loc){
     gl.vertexAttribPointer(aColor, 4, gl.FLOAT, false, 0, 0); // describing positions in array
     gl.enableVertexAttribArray(aColor);
 
-    requestAnimationFrame(vcirclerender);
+    vcirclerender();
     pos = [];
     c = [];
 }
@@ -415,5 +416,5 @@ function vgridrender(){ //render function ONLY for the grid. We will use a separ
 
 function vcirclerender(){ //render function ONLY for the pucks.
     gl.clear(gl.COLOR_BUFFER_BIT); //completely clear color
-    gl.drawArrays(gl.TRIANGLE_FAN, 0, pos.length); //draw pucks
+    gl.drawArrays(gl.POINTS, 0, pos.length); //draw pucks
 }
